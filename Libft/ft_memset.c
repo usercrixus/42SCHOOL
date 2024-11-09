@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:20:29 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 21:09:22 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:57:10 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memset(void *ptr, int value, size_t size)
 {
-	size_t				i;
+	size_t			i;
 	unsigned char	*byte_ptr;
 
 	byte_ptr = (unsigned char *)ptr;

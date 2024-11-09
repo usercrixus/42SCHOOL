@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:49:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 03:29:25 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:54:35 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int test_ft_memmove()
 		str1[i] = '0' + (i % 10);
 		i++;
 	}
-	str1[i] == '\0';
+	str1[i] = '\0';
 
 	ft_memmove(str1 + 4, str1, 8);
 	i = 0;
@@ -183,7 +183,7 @@ int test_ft_memmove()
 		str1[i] = '0' + (i % 10);
 		i++;
 	}
-	str1[i] == '\0';
+	str1[i] = '\0';
 	ft_memmove(str1 + 1, str1 + 4, 10);
 	i = 0;
 	while (i < 32)
@@ -194,6 +194,26 @@ int test_ft_memmove()
 	}
 
 	return (0);
+}
+
+int	test_ft_strlcat()
+{
+	char dest[30] = "It is a ";
+	char src[] = "Hello world";
+	int x = ft_strlcat(dest, src, 13 + 1);
+	if (x == 8 + 11 && ft_strncmp(dest, "It is a Hello", 13) == 0)
+		return (0);
+	return (1);
+}
+
+int test_ft_strlcpy()
+{
+	char dest[30] = "";
+	char src[] = "Hello world !";
+	int x = ft_strlcpy(dest, src, 5);
+	if (x == 13 && ft_strncmp(dest, "Hello", 5) == 0)
+		return (0);
+	return (1);
 }
 
 int test_ft_toupper()
@@ -450,8 +470,8 @@ int	main(void)
 	printf("ft_bzero : %d \n", test_ft_bzero());
 	printf("ft_memcpy : %d \n", test_ft_memcpy());
 	printf("ft_memmove : %d \n", test_ft_memmove());
-	// printf("ft_strlcpy : %d \n", test_ft_strlcpy());
-	// printf("ft_strlcat : %d \n", test_ft_strlcat());
+	printf("ft_strlcpy : %d \n", test_ft_strlcpy());
+	printf("ft_strlcat : %d \n", test_ft_strlcat());
 	printf("ft_toupper : %d\n", test_ft_toupper());
 	printf("ft_tolower : %d\n", test_ft_tolower());
 	printf("ft_strchr : %d\n", test_ft_strchr());

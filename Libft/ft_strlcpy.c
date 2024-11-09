@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 23:40:12 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 17:56:24 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/09 17:42:03 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/09 17:55:06 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int	result;
-	int	i;
-	int	is_neg;
+	size_t	i;
 
-	result = 0;
 	i = 0;
-	is_neg = 0;
-	if (str[0] == '-')
+	while (i < size && src[i])
 	{
-		is_neg = 1;
+		dst[i] = src[i];
 		i++;
 	}
-	while (str[i] && ft_isdigit(str[i]))
-	{
-		result *= 10;
-		if (is_neg)
-			result -= str[i] - '0';
-		else
-			result += str[i] - '0';
+	dst[i] = '\0';
+	while (src[i])
 		i++;
-	}
-	return (result);
+	return (i);
 }

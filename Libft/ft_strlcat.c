@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 23:40:12 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 17:56:24 by achaisne         ###   ########.fr       */
+/*   Created: 2024/07/08 15:19:37 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/09 17:41:54 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+size_t	ft_strlcat(char *dst, char *src, unsigned int size)
 {
-	int	result;
-	int	i;
-	int	is_neg;
+	size_t	i;
+	size_t	j;
 
-	result = 0;
 	i = 0;
-	is_neg = 0;
-	if (str[0] == '-')
-	{
-		is_neg = 1;
+	while (dst[i] && i < size)
 		i++;
-	}
-	while (str[i] && ft_isdigit(str[i]))
+	j = 0;
+	while (src[j] && i + j + 1 < size)
 	{
-		result *= 10;
-		if (is_neg)
-			result -= str[i] - '0';
-		else
-			result += str[i] - '0';
-		i++;
+		dst[i + j] = src[j];
+		j++;
 	}
-	return (result);
+	if (i + j < size)
+		dst[i + j] = '\0';
+	while (src[j])
+		j++;
+	return (j + i);
 }

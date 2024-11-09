@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 20:25:06 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:56:37 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_putnbr_fd(int n, int fd)
 {
 	char	*nbr;
-	
+
 	nbr = ft_itoa(n);
 	ft_putstr_fd(nbr, fd);
 }
