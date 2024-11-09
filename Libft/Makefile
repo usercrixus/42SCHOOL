@@ -39,11 +39,11 @@ all: libft.a
 libft.a: $(OBJS)
 	ar rcs $@ $^
 
-%.o: %.o \
+%.o: %.c \
 	cc -c $< -Wall -Wextra -Werror -o $@
 
 test: $(OBJS)
-	cc $^ test.c -o test.out
+	cc $^ test.c -o test.out && ./test.out && rm test.out
 
 clean:
 	rm -f $(OBJS)

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:17:36 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 18:09:23 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:11:03 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*get_string(const char *s, int start, int end)
 	int		k;
 
 	buffer = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!buffer)
+		return (0);
 	k = 0;
 	while (k < end - start)
 	{

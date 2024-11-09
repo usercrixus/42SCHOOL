@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:49:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 17:54:35 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:44:41 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,10 @@ int test_ft_tolower()
 int test_ft_strchr()
 {
 	char *test = "123456789";
-	if (ft_strncmp(ft_strchr(test, '4'), "456789", 6) == 0 && ft_strchr(test, '\0') == test + 9)
+	if (ft_strchr(test, '4') == test + 3
+		&& ft_strchr(test, '\0') == test + 9
+		&& ft_strchr(test, '0') == 0
+	)
 		return (0);
 	return (1);
 }
@@ -251,7 +254,10 @@ int test_ft_strchr()
 int test_ft_strrchr()
 {
 	char *test = "12345678987654321";
-	if (ft_strncmp(ft_strrchr(test, '4'), "4321", 4) == 0 && ft_strrchr(test, '\0') == test + 17)
+	if (ft_strrchr(test, '4') == test + 13 
+		&& ft_strrchr(test, '\0') == test + 17
+		&& ft_strrchr(test, '0') == 0
+	)
 		return (0);
 	return (1);
 }
@@ -263,6 +269,8 @@ int test_ft_strncmp()
 		&& ft_strncmp("1234", "1234", 4) == 0
 		&& ft_strncmp("1234", "1234", 5) == 0
 		&& ft_strncmp("1234", "1234", 6) == 0
+		&& ft_strncmp("123456", "1234", 6) == 53
+		&& ft_strncmp("1234", "123456", 6) == -53
 	)
 		return (0);
 	return (1);
@@ -273,7 +281,7 @@ int test_ft_memchr()
 	char *test = "123456789";
 	char *result1 = ft_memchr(test, '3', 3);
 	char *result2 = ft_memchr(test, '3', 2);
-	if (ft_strncmp(result1, "3456789", 7) == 0 && result2 == 0)
+	if (result1 == test + 2 && result2 == 0)
 		return (0);
 	return (1);
 }
@@ -299,9 +307,9 @@ int test_ft_strnstr()
 	char *res2 = ft_strnstr(big, little, 4);
 	char *res3 = ft_strnstr(big, little2, 5);
 	char *res4 = ft_strnstr(big, little2, 4);
-	if(ft_strncmp(res1, "llo World !", 11) == 0 
-		&& res2 == 0 
-		&& ft_strncmp(res3, "llo World !", 11) == 0
+	if(res1 == big + 2
+		&& res2 == 0
+		&& res3 == big + 2
 		&& res4 == 0
 	)
 		return (0);
@@ -343,7 +351,7 @@ int test_ft_strdup()
 {
 	char *s1 = "123456789";
 	char *s2 = ft_strdup(s1);
-	if (ft_strncmp(s1, s2, 9) == 0)
+	if (ft_strncmp(s1, s2, ft_strlen(s1)) == 0 && ft_strlen(s1) == ft_strlen(s2))
 		return (0);
 	return (1);
 }
@@ -352,7 +360,7 @@ int test_ft_substr()
 {
 	char *s1 = "0123456789";
 	char *s2= ft_substr(s1, 3, 6);
-	if (ft_strncmp(s2, "345678", 6) == 0)
+	if (ft_strncmp(s2, "345678", 6) == 0 && ft_strlen(s2) == 6)
 		return (0);
 	return (1);
 }
@@ -362,7 +370,7 @@ int	test_ft_strjoin()
 	char *s1 = "Hello ";
 	char *s2 = "World !";
 	char *result = ft_strjoin(s1, s2);
-	if(ft_strncmp(result, "Hello World !", 13) == 0)
+	if(ft_strncmp(result, "Hello World !", 13) == 0 && ft_strlen(result) == 13)
 		return (0);
 	return (1);
 }
@@ -371,7 +379,7 @@ int	test_ft_strtrim()
 {
 	char	*test = "abcabcHello Worldabcabc";
 	char	*result = ft_strtrim(test, "acb");
-	if (ft_strncmp(result, "Hello World", 11) == 0)
+	if (ft_strncmp(result, "Hello World", 11) == 0 && ft_strlen(result) == 11)
 		return (0);
 	return (1);
 }
@@ -380,10 +388,10 @@ int test_ft_split()
 {
 	char	*test = "  Hello World to  All  ";
 	char	**result = ft_split(test, ' ');
-	if (ft_strncmp(result[0], "Hello", 5) == 0
-		&& ft_strncmp(result[1], "World", 5) == 0
-		&& ft_strncmp(result[2], "to", 2) == 0
-		&& ft_strncmp(result[3], "All", 3) == 0
+	if (ft_strncmp(result[0], "Hello", 5) == 0 && ft_strlen(result[0]) == 5
+		&& ft_strncmp(result[1], "World", 5) == 0 && ft_strlen(result[1]) == 5
+		&& ft_strncmp(result[2], "to", 2) == 0 && ft_strlen(result[2]) == 2
+		&& ft_strncmp(result[3], "All", 3) == 0 && ft_strlen(result[3]) == 3
 		&& result[4] == 0
 	)
 		return (0);
@@ -394,7 +402,10 @@ int test_ft_itoa(){
 	char *test = ft_itoa(-2147483647 - 1);
 	char *test2 = ft_itoa(2147483647);
 	char *test3 = ft_itoa(0);
-	if(ft_strncmp(test, "-2147483648", 11) == 0 && ft_strncmp(test2, "2147483647", 10) == 0 && ft_strncmp(test3, "0", 1) == 0)
+	if(ft_strncmp(test, "-2147483648", 11) == 0 && ft_strlen(test) == 11
+		&& ft_strncmp(test2, "2147483647", 10) == 0 && ft_strlen(test2) == 10
+		&& ft_strncmp(test3, "0", 1) == 0 && ft_strlen(test3) == 1
+	)
 		return (0);
 	return (1);
 }
@@ -408,7 +419,7 @@ int test_ft_strmapi()
 {
 	char *test = "abcdef";
 	char *result = ft_strmapi(test, ft_strmapi_helper);
-	if (ft_strncmp(result, "acegik", 6) == 0)
+	if (ft_strncmp(result, "acegik", 6) == 0 && ft_strlen(result) == 6)
 		return (0);
 	return (1);
 }
@@ -428,7 +439,7 @@ int test_ft_striteri(){
 	}
 	test[i] = '\0';
 	ft_striteri(test, ft_striteri_helper);
-	if (ft_strncmp(test, "acegik", 6) == 0)
+	if (ft_strncmp(test, "acegik", 6) == 0 && ft_strlen(test) == 6)
 		return (0);
 	return (1);
 }
