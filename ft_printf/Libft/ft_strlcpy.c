@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/09 17:42:03 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/09 17:55:06 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	char	*nbr;
+	size_t	i;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	i = 0;
+	while (i < size && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	while (src[i])
+		i++;
+	return (i);
 }

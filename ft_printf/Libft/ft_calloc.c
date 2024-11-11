@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/07 00:07:23 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/11 05:42:03 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	*ft_calloc(size_t element_count, size_t element_size)
 {
-	char	*nbr;
+	void	*block;
+	int		size;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
+	size = element_size * element_count;
+	block = (void *)malloc(size);
+	if (!block)
 		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	ft_bzero(block, size);
+	return (block);
 }

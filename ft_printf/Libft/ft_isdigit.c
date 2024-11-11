@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/04 21:59:16 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/08 21:08:38 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_isdigit(int c)
 {
-	char	*nbr;
-
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

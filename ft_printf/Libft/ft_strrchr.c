@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/05 22:56:47 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/09 03:27:49 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+char	*ft_strrchr(const char *str, int c)
 {
-	char	*nbr;
+	int	i;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	i = 0;
+	while (str[i])
+		i++;
+	i++;
+	while (i >= 0)
+	{
+		if (str[i] == c)
+			return ((char *)(str + i));
+		i--;
+	}
+	return (0);
 }

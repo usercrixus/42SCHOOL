@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/04 22:02:05 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/04 22:05:51 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_isalnum(int c)
 {
-	char	*nbr;
-
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	if (ft_isalpha(c) || ft_isdigit(c))
+		return (1);
+	return (0);
 }

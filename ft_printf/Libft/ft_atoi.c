@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/05 23:40:12 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/09 17:56:24 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	ft_atoi(const char *str)
 {
-	char	*nbr;
+	int	result;
+	int	i;
+	int	is_neg;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	result = 0;
+	i = 0;
+	is_neg = 0;
+	if (str[0] == '-')
+	{
+		is_neg = 1;
+		i++;
+	}
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		result *= 10;
+		if (is_neg)
+			result -= str[i] - '0';
+		else
+			result += str[i] - '0';
+		i++;
+	}
+	return (result);
 }

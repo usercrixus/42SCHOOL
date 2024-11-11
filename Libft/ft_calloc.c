@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 00:07:23 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 20:59:05 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 05:41:45 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_calloc(size_t element_count, size_t element_size)
 	int		size;
 
 	size = element_size * element_count;
-	block = malloc(size);
+	block = (void *)malloc(size);
 	if (!block)
 		return (0);
 	ft_bzero(block, size);

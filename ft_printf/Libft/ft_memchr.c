@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/05 23:08:21 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/08 21:09:01 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	*ft_memchr(const void *block, int c, size_t size)
 {
-	char	*nbr;
+	unsigned char	*byte_memory_block;
+	size_t			i;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	byte_memory_block = (unsigned char *) block;
+	i = 0;
+	while (i < size)
+	{
+		if (byte_memory_block[i] == c)
+			return ((void *)(block + i));
+		i++;
+	}
+	return (0);
 }

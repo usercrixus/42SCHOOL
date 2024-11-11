@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/04 22:50:14 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/08 21:09:12 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	*ft_memcpy(void *dst, const void *src, size_t size)
 {
-	char	*nbr;
+	unsigned char	*byte_destination;
+	unsigned char	*byte_source;
+	size_t			i;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	byte_destination = (unsigned char *) dst;
+	byte_source = (unsigned char *) src;
+	i = 0;
+	while (i < size)
+	{
+		byte_destination[i] = byte_source[i];
+		i++;
+	}
+	return (dst);
 }

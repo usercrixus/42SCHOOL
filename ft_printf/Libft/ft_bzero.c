@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 20:23:04 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 04:46:33 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/04 22:38:35 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/08 20:36:08 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "stdlib.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_bzero(void *ptr, size_t size)
 {
-	char	*nbr;
+	size_t			i;
+	unsigned char	*byte_ptr;
 
-	nbr = ft_itoa(n);
-	if (!nbr)
-		return (0);
-	ft_putstr_fd(nbr, fd);
-	free(nbr);
+	i = 0;
+	byte_ptr = (unsigned char *)ptr;
+	while (i < size)
+	{
+		byte_ptr[i] = 0;
+		i++;
+	}
 }
