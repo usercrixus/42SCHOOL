@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 22:43:19 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 05:11:42 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:02:09 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			ft_bzero(void *ptr, size_t size);
 void			*ft_memcpy(void *dst, const void *src, size_t size);
 void			*ft_memmove(void *dst, const void *src, size_t size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
-size_t			ft_strlcat(char *dst, char *src, unsigned int size);
+size_t			ft_strlcat(char *dst, const char *src, size_t size); 
 int				ft_toupper(int c);
 int				ft_tolower(int c);
 char			*ft_strchr(const char *str, int c);

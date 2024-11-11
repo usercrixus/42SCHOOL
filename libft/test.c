@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:49:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 19:44:41 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 21:27:03 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ int test_ft_strlcpy()
 {
 	char dest[30] = "";
 	char src[] = "Hello world !";
-	int x = ft_strlcpy(dest, src, 5);
+	int x = ft_strlcpy(dest, src, 6);
 	if (x == 13 && ft_strncmp(dest, "Hello", 5) == 0)
 		return (0);
 	return (1);

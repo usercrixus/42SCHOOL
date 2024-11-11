@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 23:40:12 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 17:56:24 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/05 22:56:47 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/11 17:30:28 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+char	*ft_strrchr(const char *str, int c)
 {
-	int	result;
 	int	i;
-	int	is_neg;
 
-	result = 0;
 	i = 0;
-	is_neg = 0;
-	if (str[0] == '-')
-	{
-		is_neg = 1;
+	while (str[i])
 		i++;
-	}
-	while (str[i] && ft_isdigit(str[i]))
+	while (i >= 0)
 	{
-		result *= 10;
-		if (is_neg)
-			result -= str[i] - '0';
-		else
-			result += str[i] - '0';
-		i++;
+		if (str[i] == (char)c)
+			return ((char *)(str + i));
+		i--;
 	}
-	return (result);
+	return (0);
 }

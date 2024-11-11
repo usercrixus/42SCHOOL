@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 23:08:21 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 21:09:01 by achaisne         ###   ########.fr       */
+/*   Created: 2024/11/09 17:42:03 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/11 17:53:18 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *block, int c, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	unsigned char	*byte_memory_block;
-	size_t			i;
+	size_t	i;
 
-	byte_memory_block = (unsigned char *) block;
 	i = 0;
-	while (i < size)
+	if (size > 0)
 	{
-		if (byte_memory_block[i] == c)
-			return ((void *)(block + i));
-		i++;
+		while (i < size - 1 && src[i])
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-	return (0);
+	while (src[i])
+		i++;
+	return (i);
 }

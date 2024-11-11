@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:47:20 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/07 16:34:39 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:59:00 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	end_index(const char *s1, const char *set)
 		else
 			break ;
 	}
-	return (i);
+	return (i + 1);
 }
 
 char	*ft_strtrim(const char *s1, const char *set)
@@ -65,19 +65,17 @@ char	*ft_strtrim(const char *s1, const char *set)
 
 	s1_start = start_index(s1, set);
 	s1_end = end_index(s1, set);
-	if (s1_end > s1_start)
+	if (s1_start > s1_end)
+		return (ft_strdup(""));
+	result = (char *)malloc(sizeof(char) * (s1_end - s1_start + 1));
+	if (!result)
+		return (0);
+	i = s1_start;
+	while (i < s1_end)
 	{
-		result = (char *)malloc(sizeof(char) * (s1_end - s1_start + 1));
-		if (!result)
-			return (0);
-		i = s1_start;
-		while (i <= s1_end)
-		{
-			result[i - s1_start] = s1[i];
-			i++;
-		}
-		result[i] = '\0';
-		return (result);
+		result[i - s1_start] = s1[i];
+		i++;
 	}
-	return (0);
+	result[i - s1_start] = '\0';
+	return (result);
 }

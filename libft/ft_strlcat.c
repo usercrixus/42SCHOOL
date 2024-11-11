@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 00:07:23 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 05:41:45 by achaisne         ###   ########.fr       */
+/*   Created: 2024/07/08 15:19:37 by achaisne          #+#    #+#             */
+/*   Updated: 2024/11/11 20:02:26 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t element_count, size_t element_size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	void	*block;
-	int		size;
+	size_t	i;
+	size_t	j;
 
-	size = element_size * element_count;
-	block = (void *)malloc(size);
-	if (!block)
-		return (0);
-	ft_bzero(block, size);
-	return (block);
+	i = 0;
+	while (dst[i] && i < size)
+		i++;
+	j = 0;
+	while (src[j] && i + j + 1 < size)
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	if (i + j < size)
+		dst[i + j] = '\0';
+	while (src[j])
+		j++;
+	return (j + i);
 }
