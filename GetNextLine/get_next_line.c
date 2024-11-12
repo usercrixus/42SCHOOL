@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 05:33:13 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/12 06:18:39 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,11 @@ char	*get_next_line(int fd)
 	if (!str)
 		return (0);
 	if (!populate_t_string_line(fd, str))
+	{
+		free(str);
+		return (0);
+	}
+	if (!str->head)
 	{
 		free(str);
 		return (0);
