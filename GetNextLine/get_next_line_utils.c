@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:41 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 04:52:08 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/12 05:30:36 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	free_string(t_string *str)
 		str->head = str->head->next;
 		free(buffer);
 	}
-	free(str);
 }
 
 t_string	*create_string(void)

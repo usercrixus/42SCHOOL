@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 05:23:33 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/12 05:33:13 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static enum e_sstatus	str_end(
 	return (PENDING);
 }
 
-static t_string	*populate_t_string_line(int fd, t_string *str)
+static int	populate_t_string_line(int fd, t_string *str)
 {
 	enum e_sstatus		str_status;
 	static char			buffer[BUFFER_SIZE];
@@ -87,7 +87,7 @@ static t_string	*populate_t_string_line(int fd, t_string *str)
 			byte_read = read(fd, buffer, BUFFER_SIZE);
 		}
 	}
-	return (str);
+	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -98,11 +98,14 @@ char	*get_next_line(int fd)
 	str = create_string();
 	if (!str)
 		return (0);
-	populate_t_string_line(fd, str);
-	if (!str)
+	if (!populate_t_string_line(fd, str))
+	{
+		free(str);
 		return (0);
+	}
 	line = create_native_string(str);
 	free_string(str);
+	free(str);
 	if (!line)
 		return (0);
 	return (line);
