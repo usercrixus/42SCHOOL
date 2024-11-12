@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:02:17 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 03:04:25 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/12 04:26:30 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,44 @@ int	main(void)
 
 	fd = open("test.txt", O_RDONLY);
 	line = get_next_line(fd);
-	while (line)
+	int i = 150;
+	while (line && i--)
 	{
-		printf("%s\n", line);
+		printf("%s", line);
+		free(line);
 		line = get_next_line(fd);
 	}
+
+	close(fd);
+
+/*
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("Test 2");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	printf("\n");
+
+
+	i = 0;
+	int j = 0;
+	fd = open("test.txt", O_RDONLY);
+	line = get_next_line(fd);
+	while (j < 15 && line)
+	{
+		while (line[i] != '\n')
+		{
+			printf("%c", line[i]);
+			i++;
+		}
+		printf("\n");
+		free(line);
+		line = get_next_line(fd);
+		j++;
+	}
+	close(fd);
+*/
 }

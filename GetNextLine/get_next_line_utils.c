@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:41 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/11 03:01:12 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/12 04:52:08 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	push_char(t_string *str, char c)
 {
 	t_char_list	*node;
-	t_char_list	*buffer;
 
 	node = (t_char_list *)malloc(sizeof(t_char_list) * 1);
 	if (!node)
@@ -60,6 +59,19 @@ void	free_string(t_string *str)
 		str->head = str->head->next;
 		free(buffer);
 	}
+	free(str);
+}
+
+t_string	*create_string(void)
+{
+	t_string	*str;
+
+	str = (t_string *)malloc(sizeof(t_string) * 1);
+	if (!str)
+		return (0);
+	str->head = 0;
+	str->tail = 0;
+	return (str);
 }
 
 char	*create_native_string(t_string *str)
@@ -69,8 +81,6 @@ char	*create_native_string(t_string *str)
 	int			i;
 	int			len;
 
-	if (!str->head)
-		return (0);
 	len = get_str_len(str);
 	line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!line)
