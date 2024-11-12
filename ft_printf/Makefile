@@ -7,25 +7,27 @@ OBJS = \
 
 all: libftprintf.a
 
-libftprintf.a: Libft/libft.a $(OBJS)
-	ar rcs $@ $^
+libftprintf.a: $(OBJS) libft/libft.a
+	# Combine libft.a and ftprintf objects into libftprintf.a
+	cp libft/libft.a libftprintf.a
+	ar rcs libftprintf.a $(OBJS)
 
-Libft/libft.a:
-	make -C Libft all
+libft/libft.a:
+	make -C libft all
 
 %.o: %.c
-	cc -c $< -Wall -Wextra -Werror -I Libft -o $@
+	cc -c $< -Wall -Wextra -Werror -I libft -o $@
 
 test: libftprintf.a
-	cc test.c -Wall -Wextra -Werror -L. -LLibft -lftprintf -lft -o test.out
+	cc test.c -Wall -Wextra -Werror -L. -lftprintf -o test.out
 
 clean:
 	rm -f $(OBJS)
-	make -C Libft clean
+	make -C libft clean
 
 fclean: clean
 	rm -f libftprintf.a test.out
-	make -C Libft fclean
+	make -C libft fclean
 
 re: fclean all
 

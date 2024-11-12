@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "Libft/libft.h"
+# include "libft/libft.h"
 # include <stdarg.h>
 
 int	manage_print_hex(va_list *args);
