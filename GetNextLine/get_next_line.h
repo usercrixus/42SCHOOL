@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:45 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 05:12:10 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 01:05:46 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,33 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
 
+# define T_STRING_BUFFER_SIZE 4 * 1024
+
 typedef struct s_char_list
 {
-	char				c;
+	char				*c;
 	struct s_char_list	*next;
 }	t_char_list;
 
 typedef struct s_string
 {
-	t_char_list	*head;
-	t_char_list	*tail;
+	unsigned long long	size;
+	t_char_list			*head;
+	t_char_list			*tail;
 }	t_string;
+
+typedef struct s_fd
+{
+	char	buffer[BUFFER_SIZE];
+	ssize_t	byte_read;
+	ssize_t	offset;
+}	t_fd;
 
 enum e_sstatus
 {

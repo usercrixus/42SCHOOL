@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:41 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 05:30:36 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/13 23:56:33 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,29 @@ int	push_char(t_string *str, char c)
 {
 	t_char_list	*node;
 
-	node = (t_char_list *)malloc(sizeof(t_char_list) * 1);
-	if (!node)
-		return (0);
-	node->c = c;
-	node->next = 0;
-	if (str->head == 0)
+	if (str->size % T_STRING_BUFFER_SIZE == 0)
 	{
-		str->head = node;
-		str->tail = node;
+		node = (t_char_list *)malloc(sizeof(t_char_list) * 1);
+		if (!node)
+			return (0);
+		node->c = (char *)malloc(sizeof(char) * (T_STRING_BUFFER_SIZE));
+		if (!node->c)
+			return (0);
+		node->next = 0;
+		if (str->head == 0)
+		{
+			str->head = node;
+			str->tail = node;
+		}
+		else
+		{
+			str->tail->next = node;
+			str->tail = node;
+		}
 	}
-	else
-	{
-		str->tail->next = node;
-		str->tail = node;
-	}
+	(str->tail->c)[str->size % (T_STRING_BUFFER_SIZE - 1)] = c;
+	str->size++;
 	return (1);
-}
-
-int	get_str_len(t_string *str)
-{
-	int			len;
-	t_char_list	*buffer;
-
-	buffer = str->head;
-	len = 0;
-	while (buffer)
-	{
-		len++;
-		buffer = buffer->next;
-	}
-	return (len);
 }
 
 void	free_string(t_string *str)
@@ -57,6 +49,7 @@ void	free_string(t_string *str)
 	{
 		buffer = str->head;
 		str->head = str->head->next;
+		free(buffer->c);
 		free(buffer);
 	}
 }
@@ -70,27 +63,27 @@ t_string	*create_string(void)
 		return (0);
 	str->head = 0;
 	str->tail = 0;
+	str->size = 0;
 	return (str);
 }
 
 char	*create_native_string(t_string *str)
 {
-	char		*line;
-	t_char_list	*buffer;
-	int			i;
-	int			len;
+	char				*line;
+	t_char_list			*buffer;
+	unsigned long long	i;
 
-	len = get_str_len(str);
-	line = (char *)malloc(sizeof(char) * (len + 1));
+	line = (char *)malloc(sizeof(char) * (str->size + 1));
 	if (!line)
 		return (0);
 	buffer = str->head;
 	i = 0;
-	while (buffer)
+	while (i < str->size)
 	{
-		line[i] = buffer->c;
+		line[i] = (buffer->c)[i % (T_STRING_BUFFER_SIZE - 1)];
 		i++;
-		buffer = buffer->next;
+		if (i % T_STRING_BUFFER_SIZE == 0)
+			buffer = buffer->next;
 	}
 	line[i] = '\0';
 	return (line);

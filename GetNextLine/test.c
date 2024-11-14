@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:02:17 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 15:54:02 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 01:10:18 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,26 @@
 
 int	main(void)
 {
-	int		fd;
+	int		fd1;
+	int		fd2;
 	char	*line;
 
-	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
+	fd1 = open("test.txt", O_RDONLY);
+	fd2 = open("test.txt", O_RDONLY);
+	line = get_next_line(fd1);
 	int i = 150;
 	while (line && i--)
 	{
 		printf("%s", line);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(fd2);
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd1);
 	}
 
-	close(fd);
+	close(fd1);
+	close(fd2);
 
 /*
 	printf("\n");

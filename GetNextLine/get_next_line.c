@@ -6,33 +6,32 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 15:46:49 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 01:06:59 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-static enum e_sstatus	populate_line(
-	char *buffer, t_string *s, ssize_t byte_read, ssize_t *offset)
+static enum e_sstatus	populate_line(t_fd *fd, t_string *s)
 {
-	while (*offset < byte_read && buffer[*offset] != '\n')
+	while (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] != '\n')
 	{
-		if (!push_char(s, buffer[*offset]))
+		if (!push_char(s, (fd->buffer)[fd->offset]))
 		{
 			free_string(s);
 			return (FAILED);
 		}
-		(*offset)++;
+		(fd->offset)++;
 	}
-	if (*offset < byte_read && buffer[*offset] == '\n')
+	if (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] == '\n')
 	{
-		if (!push_char(s, buffer[*offset]))
+		if (!push_char(s, (fd->buffer)[fd->offset]))
 		{
 			free_string(s);
 			return (FAILED);
 		}
-		(*offset)++;
+		(fd->offset)++;
 		return (TERMINATED);
 	}
 	return (PENDING);
@@ -40,26 +39,24 @@ static enum e_sstatus	populate_line(
 
 static int	manage_populate_line(int fd, t_string *str)
 {
-	enum e_sstatus		str_status;
-	static char			buffer[BUFFER_SIZE];
-	static ssize_t		byte_read;
-	static ssize_t		offset;
+	enum e_sstatus	str_status;
+	static t_fd		file_d[FOPEN_MAX];
 
-	str_status = populate_line(buffer, str, byte_read, &offset);
+	str_status = populate_line(&file_d[fd], str);
 	if (str_status == FAILED)
 		return (0);
 	else if (str_status == PENDING)
 	{
-		byte_read = read(fd, buffer, BUFFER_SIZE);
-		while (byte_read > 0)
+		file_d[fd].byte_read = read(fd, file_d[fd].buffer, BUFFER_SIZE);
+		while (file_d[fd].byte_read > 0)
 		{
-			offset = 0;
-			str_status = populate_line(buffer, str, byte_read, &offset);
+			file_d[fd].offset = 0;
+			str_status = populate_line(&file_d[fd], str);
 			if (str_status == FAILED)
 				return (0);
 			else if (str_status == TERMINATED)
 				break ;
-			byte_read = read(fd, buffer, BUFFER_SIZE);
+			file_d[fd].byte_read = read(fd, file_d[fd].buffer, BUFFER_SIZE);
 		}
 	}
 	return (1);
@@ -70,6 +67,8 @@ char	*get_next_line(int fd)
 	char				*line;
 	t_string			*str;
 
+	if (fd < 0 || fd > FOPEN_MAX)
+		return (0);
 	str = create_string();
 	if (!str)
 		return (0);
