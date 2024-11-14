@@ -6,38 +6,48 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:41 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/13 23:56:33 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 04:39:48 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-int	push_char(t_string *str, char c)
+static int	push_str_node(t_string *str)
 {
 	t_char_list	*node;
 
-	if (str->size % T_STRING_BUFFER_SIZE == 0)
+	node = (t_char_list *)malloc(sizeof(t_char_list) * 1);
+	if (!node)
+		return (0);
+	node->next = 0;
+	if (str->head == 0)
 	{
-		node = (t_char_list *)malloc(sizeof(t_char_list) * 1);
-		if (!node)
-			return (0);
-		node->c = (char *)malloc(sizeof(char) * (T_STRING_BUFFER_SIZE));
-		if (!node->c)
-			return (0);
-		node->next = 0;
-		if (str->head == 0)
-		{
-			str->head = node;
-			str->tail = node;
-		}
-		else
-		{
-			str->tail->next = node;
-			str->tail = node;
-		}
+		str->head = node;
+		str->tail = node;
 	}
-	(str->tail->c)[str->size % (T_STRING_BUFFER_SIZE - 1)] = c;
-	str->size++;
+	else
+	{
+		str->tail->next = node;
+		str->tail = node;
+	}
+	return (1);
+}
+
+int	push_str(t_string *str, char *c, ssize_t len)
+{
+	ssize_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if ((str->size + i) % T_STRING_BUFFER_SIZE == 0)
+			if (!push_str_node(str))
+				return (0);
+		(str->tail->c)[(str->size + i) % T_STRING_BUFFER_SIZE] = c[i];
+		i++;
+	}
+	str->size += len;
 	return (1);
 }
 
@@ -49,9 +59,9 @@ void	free_string(t_string *str)
 	{
 		buffer = str->head;
 		str->head = str->head->next;
-		free(buffer->c);
 		free(buffer);
 	}
+	free(str);
 }
 
 t_string	*create_string(void)
@@ -80,7 +90,7 @@ char	*create_native_string(t_string *str)
 	i = 0;
 	while (i < str->size)
 	{
-		line[i] = (buffer->c)[i % (T_STRING_BUFFER_SIZE - 1)];
+		line[i] = (buffer->c)[i % T_STRING_BUFFER_SIZE];
 		i++;
 		if (i % T_STRING_BUFFER_SIZE == 0)
 			buffer = buffer->next;

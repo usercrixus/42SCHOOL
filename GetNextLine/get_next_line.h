@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:45 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/14 01:05:46 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 04:29:39 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-# define T_STRING_BUFFER_SIZE 4 * 1024
+# define T_STRING_BUFFER_SIZE 1024
 
 typedef struct s_char_list
 {
-	char				*c;
+	char				c[8 * T_STRING_BUFFER_SIZE];
 	struct s_char_list	*next;
 }	t_char_list;
 
@@ -38,7 +38,7 @@ typedef struct s_string
 
 typedef struct s_fd
 {
-	char	buffer[BUFFER_SIZE];
+	char	buffer[8 * BUFFER_SIZE];
 	ssize_t	byte_read;
 	ssize_t	offset;
 }	t_fd;
@@ -51,7 +51,7 @@ enum e_sstatus
 };
 
 char		*get_next_line(int fd);
-int			push_char(t_string *str, char c);
+int			push_str(t_string *str, char *c, ssize_t len);
 int			get_str_len(t_string *str);
 void		free_string(t_string *str);
 char		*create_native_string(t_string *str);

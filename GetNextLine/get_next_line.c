@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/14 01:06:59 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 04:34:12 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,17 @@
 
 static enum e_sstatus	populate_line(t_fd *fd, t_string *s)
 {
+	ssize_t	start;
+
+	start = fd->offset;
 	while (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] != '\n')
-	{
-		if (!push_char(s, (fd->buffer)[fd->offset]))
-		{
-			free_string(s);
-			return (FAILED);
-		}
 		(fd->offset)++;
-	}
+	if (!push_str(s, &(fd->buffer)[start], fd->offset - start))
+		return (FAILED);
 	if (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] == '\n')
 	{
-		if (!push_char(s, (fd->buffer)[fd->offset]))
-		{
-			free_string(s);
+		if (!push_str(s, &(fd->buffer)[fd->offset], 1))
 			return (FAILED);
-		}
 		(fd->offset)++;
 		return (TERMINATED);
 	}
@@ -72,19 +67,13 @@ char	*get_next_line(int fd)
 	str = create_string();
 	if (!str)
 		return (0);
-	if (!manage_populate_line(fd, str))
+	if (!manage_populate_line(fd, str) || !str->head)
 	{
-		free(str);
-		return (0);
-	}
-	if (!str->head)
-	{
-		free(str);
+		free_string(str);
 		return (0);
 	}
 	line = create_native_string(str);
 	free_string(str);
-	free(str);
 	if (!line)
 		return (0);
 	return (line);

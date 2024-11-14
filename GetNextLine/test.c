@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:02:17 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/14 01:10:18 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 03:08:07 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(void)
 	int		fd1;
 	int		fd2;
 	char	*line;
-
 	fd1 = open("test.txt", O_RDONLY);
 	fd2 = open("test.txt", O_RDONLY);
 	line = get_next_line(fd1);
