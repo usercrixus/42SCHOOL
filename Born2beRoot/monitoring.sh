@@ -11,8 +11,9 @@ physical_processors=$(lscpu | grep "Socket(s):" | awk '{print $2}')
 virtual_processors=$(nproc)
 
 # 4. Available RAM and its usage percentage
-total_memory=$(free -m | awk '/Mem:/ {print $2}')
-used_memory=$(free -m | awk '/Mem:/ {print $3}')
+total_memory=$(free -m | grep "Mem:" | awk '{print $2}')
+used_memory=$(free -m | grep "Mem:" | awk '{print $3}')
+free_memory=$(free -m | grep "Mem:" | awk '{print $4}')
 memory_usage=$(awk "BEGIN {printf \"%.2f\", ($used_memory/$total_memory)*100}")
 
 # 5. Available disk space and its usage percentage
@@ -20,7 +21,7 @@ total_disk=$(df -h --total | grep 'total' | awk '{print $2}')
 used_disk=$(df -h --total | grep 'total' | awk '{print $3}')
 disk_usage=$(df -h --total | grep 'total' | awk '{print $5}')
 
-# 6. CPU usage percentage
+# 6. CPU usage percentage (user + kernel)
 cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
 
 # 7. Date and time of the last reboot
@@ -37,27 +38,34 @@ logged_in_users=$(who | wc -l)
 
 # 11. IPv4 address and MAC address
 ip_address=$(hostname -I | awk '{print $1}')
-mac_address=$(ip link show | awk '/ether/ {print $2}')
+mac_address=$(ip link show | grep "ether" | awk '{print $2}')
 
 # 12. Number of commands executed with sudo
 sudo_commands=$(journalctl _COMM=sudo | grep -c COMMAND)
 
 # Display the information
-echo "System Architecture      : $architecture"
-echo "Kernel Version           : $kernel_version"
-echo "Physical Processors      : $physical_processors"
-echo "Virtual Processors       : $virtual_processors"
-echo "Total RAM (MB)           : $total_memory MB"
-echo "Used RAM (MB)            : $used_memory MB"
-echo "RAM Usage (%)            : $memory_usage %"
-echo "Total Disk Space         : $total_disk"
-echo "Used Disk Space          : $used_disk"
-echo "Disk Usage               : $disk_usage"
-echo "CPU Usage (%)            : $cpu_usage %"
-echo "Last Reboot              : $last_reboot"
-echo "LVM Status               : $lvm_status"
-echo "Active Connections       : $active_connections"
-echo "Logged-in Users          : $logged_in_users"
-echo "IPv4 Address             : $ip_address"
-echo "MAC Address              : $mac_address"
-echo "Sudo Commands Executed   : $sudo_commands"
+output=$(cat << EOF
+System Architecture      : $architecture
+Kernel Version           : $kernel_version
+Physical Processors      : $physical_processors
+Virtual Processors       : $virtual_processors
+Total RAM (MB)           : $total_memory MB
+Used RAM (MB)            : $used_memory MB
+Free RAM (MB)            : $free_memory MB
+RAM Usage (%)            : $memory_usage %
+Total Disk Space         : $total_disk
+Used Disk Space          : $used_disk
+Disk Usage               : $disk_usage
+CPU Usage (%)            : $cpu_usage %
+Last Reboot              : $last_reboot
+LVM Status               : $lvm_status
+Active Connections       : $active_connections
+Logged-in Users          : $logged_in_users
+IPv4 Address             : $ip_address
+MAC Address              : $mac_address
+Sudo Commands Executed   : $sudo_commands
+EOF
+)
+
+# Send the output to all users with wall
+echo "$output"
