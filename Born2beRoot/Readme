@@ -1,0 +1,84 @@
+#install sudo as root
+apt update
+apt install sudo
+groupadd user42
+usermod -aG user42,sudo your_login
+
+#ssh
+sudo apt update
+sudo apt install openssh-server
+sudo nano /etc/ssh/sshd_config
+uncomment : Port 4242
+change #PermitRootLogin prohibit-password to PermitRootLogin no
+
+# verify ssh
+sudo systemctl status ssh
+
+Enable Port Forwarding in VirtualBox
+    Open VirtualBox, select your VM, and click on Settings.
+    Go to the Network tab.
+    Ensure that the network adapter is set to NAT (default setting).
+    Click on Advanced and then Port Forwarding.
+    Add a new rule:
+        Name: SSH
+        Protocol: TCP
+        Host IP: Leave this empty or set it to 127.0.0.1.
+        Host Port: 4242 (or any port you want to use on your host machine).
+        Guest IP: Leave this empty
+        Guest Port: 4242 (the port your SSH server is listening on in the VM).
+From you machine :
+ssh username@127.0.0.1 -p 4242 <- should succeed
+ssh root@127.0.0.1 -p 4242 <- should fail
+
+#ufw firewall
+sudo apt update
+sudo apt install ufw
+sudo ufw reset
+sudo ufw allow 4242
+sudo ufw enable
+#verify ufw firewall
+sudo ufw status verbose
+sudo systemctl is-enabled ufw : you should see enable, if not : sudo systemctl enable ufw
+
+#set some more
+sudo visudo
+Add or modify these lines:
+Defaults badpass_message="Access Denied: Wrong password!" # Custom error message
+Defaults logfile="/var/log/sudo/sudo.log" # Log inputs and outputs
+Defaults requiretty                    # Enable TTY mode
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+Create Log Directory for sudo
+Ensure the log directory exists:
+sudo mkdir -p /var/log/sudo
+sudo chmod 700 /var/log/sudo
+
+#set pass word condition
+sudo apt update
+sudo apt install libpam-pwquality
+sudo nano /etc/pam.d/common-password
+# Apply strong password rules for all users except root
+password required pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username  enforce_for_root
+password [success=1 default=ignore] pam_succeed_if.so user != root
+password required pam_pwquality.so difok=7
+password [success=1 default=ignore] pam_unix.so obscure use_authok try_first_pass yescrypt
+
+#test password condition
+change your password with the passwd command
+
+#password age policy
+sudo nano /etc/login.defs
+Add or modify these lines:
+PASS_MAX_DAYS   30        # Password expires every 30 days
+PASS_MIN_DAYS   2         # Minimum 2 days before password change
+PASS_WARN_AGE   7         # Warning 7 days before expiration
+
+then for existing users :
+sudo chage -M 30 -m 2 -W 7 your_user
+
+#verify password age policy
+Check password aging policy:
+chage -l your_user
+try to change your password...
+
+
