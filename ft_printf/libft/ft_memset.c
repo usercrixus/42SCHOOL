@@ -26,3 +26,4 @@ void	*ft_memset(void *ptr, int value, size_t size)
 	}
 	return (ptr);
 }
+

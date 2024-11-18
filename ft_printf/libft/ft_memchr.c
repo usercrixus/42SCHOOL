@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:08:21 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 21:09:01 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:17:44 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_memchr(const void *block, int c, size_t size)
 	i = 0;
 	while (i < size)
 	{
-		if (byte_memory_block[i] == c)
+		if (byte_memory_block[i] == (unsigned char)c)
 			return ((void *)(block + i));
 		i++;
 	}

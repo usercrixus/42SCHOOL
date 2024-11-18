@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:09:09 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/12 22:31:12 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:04:13 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	manage_print_pointer(va_list *args)
 
 	p = va_arg(*args, void *);
 	if (p == 0)
-		return (ft_printf("(nil)", 1));
+		return (ft_putstr_fd("(nil)", 1));
 	return (ft_putstr_fd("0x", 1) + print_hex((unsigned long)p));
 }

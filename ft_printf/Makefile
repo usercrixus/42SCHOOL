@@ -18,7 +18,7 @@ libft/libft.a:
 %.o: %.c
 	cc -c $< -Wall -Wextra -Werror -I libft -o $@
 
-test: libftprintf.a
+test: libftprintf.a libft/libft.a
 	cc test.c -Wall -Wextra -Werror -L. -lftprintf -o test.out
 
 clean:

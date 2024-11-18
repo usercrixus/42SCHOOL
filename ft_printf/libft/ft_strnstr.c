@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:24:56 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/09 18:00:21 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:12:22 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	big_len = ft_strlen(big);
 	little_len = ft_strlen(little);
 	i = 0;
-	while (i + little_len <= len && i <= big_len - little_len)
+	while (i + little_len <= len && i + little_len <= big_len)
 	{
 		j = 0;
 		while (j < little_len)

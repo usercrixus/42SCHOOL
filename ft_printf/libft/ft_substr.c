@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 00:19:17 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/08 20:32:48 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:41:59 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	s_len = ft_strlen(s);
 	if (start > s_len)
-		return (0);
+		final_len = 0;
 	else if (s_len - start > len)
 		final_len = len;
 	else
@@ -35,6 +35,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		sub_string[i - start] = s[i];
 		i++;
 	}
-	sub_string[i] = '\0';
+	sub_string[i - start] = '\0';
 	return (sub_string);
 }
