@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:51 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/17 21:33:12 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:03:35 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,63 +21,119 @@ void	populate_a(t_int_list **a, char **argv, int argc)
 	int			number;
 	t_int_list	*node;
 
-	i = 1;
+	i = 0;
 	number = atoi(argv[i]);
 	node = create_node(number);
-	manage_push(a, &node);
+	swap(a, &node, 0);
 	i++;
 	while (i < argc)
 	{
 		number = atoi(argv[i]);
 		node = create_node(number);
-		manage_push(a, &node);
+		swap(a, &node, 0);
 		i++;
 	}
 }
 
-int	sort(t_int_list **start, t_int_list **end, t_int_list **b, t_int_list **a)
-{
-	t_int_list		*pivot_node;
-	struct s_minmax	minmax;
-	int				pivot;
+int power(int base, int exp) {
+    int result = 1;
+    while (exp--) {
+        result *= base;
+    }
+    return result;
+}
 
-	minmax = get_min_max(start, end);
-	pivot = (minmax.max + minmax.min) / 2;
-	if (minmax.max == minmax.min)
-		return (0);
-	partition(start, end, b, a, pivot);
-	pivot_node = *a;
-	while (*b)
-		manage_push(a, b);
-	*start = *a;
-	if (is_sorted_a(start, end))
-		return (0);
-	sort(&pivot_node, end, b, a);
-	sort(start, &pivot_node, b, a);
+int convert_to_ternary(int number, int index) {
+    if (index < 0)
+        return 0;
+    return (number / power(3, index)) % 3;
+}
+
+int	sort(t_int_list **b, t_int_list **a, int max)
+{
+	int	len;
+	int	shift;
+	int	bit_len;
+	int	trigger;
+
+	shift = 0;
+	bit_len = 0;
+	while (max){
+		max /= 3;
+		bit_len++;
+	}
+	bit_len = 5;
+	while (bit_len > 0)
+	{
+		len = list_len(a, &((*a)->previous));
+		trigger = 0;
+		while (len)
+		{
+			int digit = convert_to_ternary((*a)->c, shift);
+			if (digit == 0)
+			{
+				if (trigger)
+				{
+					rr(a, b);
+					trigger = 0;
+				}
+				else
+					rotate(a);
+				
+			}
+			else if (digit == 1)
+			{
+				if (trigger)
+				{
+					rotate(b);
+					trigger = 0;
+				}
+				swap(b, a, 1);
+			}
+			else if (digit == 2)
+			{
+				if (trigger)
+					rotate(b);
+				swap(b, a, 1);
+				trigger = 1;
+			}
+			len--;
+		}
+		if (trigger)
+			rotate(b);
+		while (*b)
+			swap(a, b, 1);
+
+		shift++;
+		bit_len--;
+	}
 	return (1);
 }
+
 
 int	main(int argc, char **argv)
 {
 	t_int_list		*a;
 	t_int_list		*b;
-	t_int_list		*start;
-	t_int_list		*end;
-	struct s_minmax	minmax;
-	int				pivot;
+	int				max;
+	int				*list;
+	int				i;
 
 	a = 0;
 	b = 0;
-	start = 0;
-	end = 0;
 	if (argc < 2)
 		return 1;
-	populate_a(&a, argv, argc);
-	end = a->previous;
-	start = a;
-	minmax = get_min_max(&start, &end);
-	sort(&start, &end, &b, &a);
-	ft_putstr_fd("Sorted list: ", 1);
+	populate_a(&a, &argv[1], argc - 1);
+	list = (int *)malloc(sizeof(int) * (argc - 1));
+	i = 0;
+	while (i < argc - 1)
+	{
+		list[i] = atoi(argv[i + 1]);
+		i++;
+	}
+	sort_int(list, argc - 1);
+	normalize(&a, list, argc - 1);
+	sort(&b, &a, argc - 1);
 	print_list(a);
 	return (0);
 }

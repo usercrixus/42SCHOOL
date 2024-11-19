@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/17 21:36:17 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:56:32 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,15 @@ struct s_minmax
 };
 
 t_int_list		*create_node(int c);
-void			manage_push(t_int_list **stack_pushed, t_int_list **stack_poped);
+void			swap(t_int_list **stack_pushed, t_int_list **stack_poped, int verbose);
 void			push(t_int_list **stack, t_int_list **node);
-void			swap(t_int_list **stack);
+void			swap_top(t_int_list **stack);
 void			rotate(t_int_list **stack);
 void			rrotate(t_int_list **stack);
-int				is_sorted_a(t_int_list **start, t_int_list **end);
+void			rr(t_int_list **stacka, t_int_list **stackb);
 int				list_len(t_int_list **start, t_int_list **end);
 void			print_list(t_int_list *a);
-void			partition(t_int_list **start, t_int_list **end, t_int_list **b, t_int_list **a, int pivots);
-t_int_list		*get_pivot(t_int_list **start, t_int_list **end, int pivot);
-struct s_minmax	get_min_max(t_int_list **start, t_int_list **end);
+void			normalize(t_int_list **a, int *tab, int size);
+void			sort_int(int *tab, int size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:48 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/17 21:27:47 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:57:33 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,17 @@ void	push(t_int_list **stack_pushed, t_int_list **node)
 	}
 }
 
-void	manage_push(t_int_list **stack_pushed, t_int_list **stack_poped)
+void	swap(t_int_list **stack_pushed, t_int_list **stack_poped, int verbose)
 {
 	t_int_list	*poped;
 
 	poped = pop(stack_poped);
 	push(stack_pushed, &poped);
-	ft_putendl_fd("pa", 1);
+	if (verbose)
+		ft_putendl_fd("pa", 1);
 }
 
-void	swap(t_int_list **stack)
+void	swap_top(t_int_list **stack)
 {
 	t_int_list	*poped;
 	t_int_list	*insert;
@@ -95,12 +96,11 @@ void	rrotate(t_int_list **stack)
 	ft_putendl_fd("rr", 1);
 }
 
-int	is_sorted(t_int_list *a, t_int_list *b)
+void	rr(t_int_list **stacka, t_int_list **stackb)
 {
-	while (a && a->next)
-		if (a->c < a->next->c)
-			a = a->next;
-	if (!a->next)
-		return (1);
-	return (0);
+	if (*stacka)
+		*stacka = (*stacka)->next;
+	if (*stackb)
+		*stackb = (*stackb)->next;
+	ft_putendl_fd("rr", 1);
 }
