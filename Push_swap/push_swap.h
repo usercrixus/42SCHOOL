@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/19 20:56:32 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/21 05:03:07 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ struct s_minmax
 	int	max;
 };
 
+struct way
+{
+	int branch;
+	int way;
+	int step;
+};
+
+
 t_int_list		*create_node(int c);
 void			swap(t_int_list **stack_pushed, t_int_list **stack_poped, int verbose);
 void			push(t_int_list **stack, t_int_list **node);
@@ -47,5 +55,6 @@ int				list_len(t_int_list **start, t_int_list **end);
 void			print_list(t_int_list *a);
 void			normalize(t_int_list **a, int *tab, int size);
 void			sort_int(int *tab, int size);
+void			rrr(t_int_list **stacka, t_int_list **stackb);
 
 #endif

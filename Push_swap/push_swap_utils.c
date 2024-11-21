@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:48 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/19 20:57:33 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/21 04:56:24 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,14 @@ void	rr(t_int_list **stacka, t_int_list **stackb)
 		*stacka = (*stacka)->next;
 	if (*stackb)
 		*stackb = (*stackb)->next;
-	ft_putendl_fd("rr", 1);
+	ft_putendl_fd("rrr", 1);
+}
+
+void	rrr(t_int_list **stacka, t_int_list **stackb)
+{
+	if (*stacka)
+		*stacka = (*stacka)->previous;
+	if (*stackb)
+		*stackb = (*stackb)->previous;
+	ft_putendl_fd("rrrr", 1);
 }
