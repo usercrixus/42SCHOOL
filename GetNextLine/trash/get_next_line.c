@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static enum e_sstatus	populate_line(t_fd *fd, t_string *s)
 {
@@ -35,7 +34,7 @@ static enum e_sstatus	populate_line(t_fd *fd, t_string *s)
 static int	manage_populate_line(int fd, t_string *str)
 {
 	enum e_sstatus	str_status;
-	static t_fd		file_d[FOPEN_MAX];
+	static t_fd		file_d[1024];
 
 	str_status = populate_line(&file_d[fd], str);
 	if (str_status == FAILED)
@@ -61,7 +60,7 @@ char	*get_next_line(int fd)
 	char				*line;
 	t_string			*str;
 
-	if (fd < 0 || fd > FOPEN_MAX)
+	if (fd < 0 || fd >= 1024)
 		return (0);
 	str = create_string();
 	if (!str)

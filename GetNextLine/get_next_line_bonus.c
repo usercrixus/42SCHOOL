@@ -6,73 +6,49 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/14 05:38:03 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/23 20:10:55 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <stdio.h>
 
-static enum e_sstatus	populate_line(t_fd *fd, t_string *s)
+
+
+static t_string	*manage_populate_line(t_string *str, int fd)
 {
-	ssize_t	start;
+	char			buffer[BUFFER_SIZE];
+	ssize_t			byte_readed;
+	int				i;
 
-	start = fd->offset;
-	while (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] != '\n')
-		(fd->offset)++;
-	if (!push_str(s, &(fd->buffer)[start], fd->offset - start))
-		return (FAILED);
-	if (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] == '\n')
+	byte_readed = read(fd, buffer, BUFFER_SIZE);
+	while (byte_readed > 0)
 	{
-		if (!push_str(s, &(fd->buffer)[fd->offset], 1))
-			return (FAILED);
-		(fd->offset)++;
-		return (TERMINATED);
-	}
-	return (PENDING);
-}
-
-static int	manage_populate_line(int fd, t_string *str)
-{
-	enum e_sstatus	str_status;
-	static t_fd		file_d[FOPEN_MAX];
-
-	str_status = populate_line(&file_d[fd], str);
-	if (str_status == FAILED)
-		return (0);
-	else if (str_status == PENDING)
-	{
-		file_d[fd].byte_read = read(fd, file_d[fd].buffer, BUFFER_SIZE);
-		while (str_status == PENDING && file_d[fd].byte_read > 0)
+		i = 0;
+		while (i < byte_readed)
 		{
-			file_d[fd].offset = 0;
-			str_status = populate_line(&file_d[fd], str);
-			if (str_status == FAILED)
-				return (0);
-			else if (str_status == PENDING)
-				file_d[fd].byte_read = read(fd, file_d[fd].buffer, BUFFER_SIZE);
+			push_str(str, &buffer[i], 1);
+			i++;
 		}
+		if (is_contain_line_feed(str))
+			byte_readed = 0;
+		else
+			byte_readed = read(fd, buffer, BUFFER_SIZE);
 	}
-	return (1);
 }
 
 char	*get_next_line(int fd)
 {
 	char				*line;
-	t_string			*str;
+	static t_string		*str[1024];
 
-	if (fd < 0 || fd > FOPEN_MAX)
+	if (fd < 0 || fd >= 1024)
 		return (0);
-	str = create_string();
-	if (!str)
-		return (0);
-	if (!manage_populate_line(fd, str) || !str->head)
-	{
-		free_string(str);
-		return (0);
-	}
-	line = create_native_string(str);
-	free_string(str);
+	if (!str[fd])
+		str[fd] = create_string();
+	if (!is_contain_line_feed(str[fd]))
+		manage_populate_line(str[fd], fd);
+	line = create_native_string(str[fd]);
 	if (!line)
 		return (0);
 	return (line);

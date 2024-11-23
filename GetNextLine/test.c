@@ -6,11 +6,11 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:02:17 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/14 03:08:07 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/23 20:12:17 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -22,21 +22,20 @@ int	main(void)
 	int		fd2;
 	char	*line;
 	fd1 = open("test.txt", O_RDONLY);
-	fd2 = open("test.txt", O_RDONLY);
+	//fd2 = open("test.txt", O_RDONLY);
 	line = get_next_line(fd1);
-	int i = 150;
-	while (line && i--)
+	int i = 3;
+	while (i-- && line)
 	{
 		printf("%s", line);
 		free(line);
-		line = get_next_line(fd2);
-		printf("%s", line);
-		free(line);
+		//line = get_next_line(fd2);
+		//printf("%s", line);
+		//free(line);
 		line = get_next_line(fd1);
 	}
 
 	close(fd1);
-	close(fd2);
 
 /*
 	printf("\n");
