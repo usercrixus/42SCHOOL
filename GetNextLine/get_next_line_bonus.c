@@ -6,74 +6,125 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/14 05:38:03 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:35:21 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
-static enum e_sstatus	populate_line(t_fd *fd, t_string *s)
+static int	is_buffer_line_feed(char *str, ssize_t len)
 {
-	ssize_t	start;
+	ssize_t	i;
 
-	start = fd->offset;
-	while (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] != '\n')
-		(fd->offset)++;
-	if (!push_str(s, &(fd->buffer)[start], fd->offset - start))
-		return (FAILED);
-	if (fd->offset < fd->byte_read && (fd->buffer)[fd->offset] == '\n')
+	if (!str)
+		return (0);
+	i = 0;
+	while (i < len)
 	{
-		if (!push_str(s, &(fd->buffer)[fd->offset], 1))
-			return (FAILED);
-		(fd->offset)++;
-		return (TERMINATED);
+		if (str[i] == '\n')
+			return (1);
+		i++;
 	}
-	return (PENDING);
+	return (0);
 }
 
-static int	manage_populate_line(int fd, t_string *str)
+char	*get_char_array(t_str *str, unsigned long long line_size)
 {
-	enum e_sstatus	str_status;
-	static t_fd		file_d[FOPEN_MAX];
+	char				*line;
+	t_char_list			*buffer;
+	unsigned long long	i;
 
-	str_status = populate_line(&file_d[fd], str);
-	if (str_status == FAILED)
+	if (line_size <= 0 || !str)
 		return (0);
-	else if (str_status == PENDING)
+	line = (char *)malloc(sizeof(char) * (line_size + 1));
+	if (!line)
+		return (0);
+	buffer = str->head;
+	i = 0;
+	while (i < line_size)
 	{
-		file_d[fd].byte_read = read(fd, file_d[fd].buffer, BUFFER_SIZE);
-		while (str_status == PENDING && file_d[fd].byte_read > 0)
+		if (!buffer)
 		{
-			file_d[fd].offset = 0;
-			str_status = populate_line(&file_d[fd], str);
-			if (str_status == FAILED)
-				return (0);
-			else if (str_status == PENDING)
-				file_d[fd].byte_read = read(fd, file_d[fd].buffer, BUFFER_SIZE);
+			free(line);
+			return (0);
 		}
+		line[i] = (buffer->c)[(i + str->start) % T_STR_BUFFER_SIZE];
+		i++;
+		if ((i + str->start) % T_STR_BUFFER_SIZE == 0)
+			buffer = buffer->next;
 	}
-	return (1);
+	line[i] = '\0';
+	return (line);
+}
+
+static int	populate_line(t_str *s, int fd)
+{
+	char	*buffer;
+	ssize_t	byte_readed;
+
+	if (!s)
+		return (0);
+	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	if (!buffer)
+		return (0);
+	byte_readed = read(fd, buffer, BUFFER_SIZE);
+	while (byte_readed > 0)
+	{
+		if (!push_str(s, buffer, byte_readed))
+		{
+			free(buffer);
+			return (0);
+		}
+		if (is_buffer_line_feed(buffer, byte_readed))
+		{
+			free(buffer);
+			return (1);
+		}
+		byte_readed = read(fd, buffer, BUFFER_SIZE);
+	}
+	free(buffer);
+	return (-1);
+}
+
+static unsigned long long	get_line_size(t_str *str, int fd)
+{
+	int					read_status;
+	unsigned long long	line_size;
+
+	if (!str)
+		return (0);
+	line_size = is_line_feed(str);
+	if (!line_size)
+	{
+		read_status = populate_line(str, fd);
+		if (!read_status)
+			return (0);
+		if (read_status == 1)
+			line_size = is_line_feed(str);
+		else
+			line_size = str->size;
+	}
+	return (line_size);
 }
 
 char	*get_next_line(int fd)
 {
+	static t_str		*str[1024];
+	unsigned long long	line_size;
 	char				*line;
-	t_string			*str;
 
-	if (fd < 0 || fd > FOPEN_MAX)
+	if (fd < 0 || fd > 1024)
 		return (0);
-	str = create_string();
-	if (!str)
+	if (!str[fd])
+		str[fd] = create_str();
+	if (!str[fd])
 		return (0);
-	if (!manage_populate_line(fd, str) || !str->head)
-	{
-		free_string(str);
+	line_size = get_line_size(str[fd], fd);
+	if (!line_size)
 		return (0);
-	}
-	line = create_native_string(str);
-	free_string(str);
+	line = get_char_array(str[fd], line_size);
 	if (!line)
 		return (0);
+	troncate_str_begin(str[fd], line_size);
 	return (line);
 }

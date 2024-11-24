@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/21 05:03:07 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/22 04:00:03 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <stdlib.h>
 # include <stdio.h>
-# include "../libft/libft.h"
+# include "../libft/base/libft.h"
+# include "../libft/math/math.h"
 
 typedef struct s_int_list
 {
@@ -36,7 +37,7 @@ struct s_minmax
 	int	max;
 };
 
-struct way
+struct s_way
 {
 	int branch;
 	int way;
@@ -56,5 +57,6 @@ void			print_list(t_int_list *a);
 void			normalize(t_int_list **a, int *tab, int size);
 void			sort_int(int *tab, int size);
 void			rrr(t_int_list **stacka, t_int_list **stackb);
+t_int_list		*pop(t_int_list **stack);
 
 #endif

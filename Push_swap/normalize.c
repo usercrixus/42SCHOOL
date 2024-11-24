@@ -6,12 +6,11 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:50:12 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/19 20:10:27 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/22 00:06:46 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "../libft/libft.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {
