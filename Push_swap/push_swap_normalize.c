@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normalize.c                                        :+:      :+:    :+:   */
+/*   push_swap_normalize.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 18:50:12 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 00:16:30 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:49:31 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void	sort_int(int *tab, int size)
 
 void	normalize(t_int_list **a, int *tab, int size)
 {
-	int	i;
-	t_int_list *buffer;
-	t_int_list *end;
-	i = 0;
+	int			i;
+	t_int_list	*buffer;
+	t_int_list	*end;
 
+	i = 0;
 	end = (*a)->previous;
 	while (i < size)
 	{
@@ -51,7 +51,7 @@ void	normalize(t_int_list **a, int *tab, int size)
 		while (buffer != end)
 		{
 			if (buffer->c == tab[i])
-				break;;
+				break ;
 			buffer = buffer->next;
 		}
 		if (buffer->c == tab[i])

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_logic.c                                  :+:      :+:    :+:   */
+/*   push_swap_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:23:46 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 00:15:21 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:54:29 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	list_len(t_int_list **start, t_int_list **end)
 
 int	is_min(t_int_list *a, int x)
 {
-	t_int_list *end;
-	t_int_list *buffer;
+	t_int_list	*end;
+	t_int_list	*buffer;
 
 	end = a->previous;
 	buffer = a;
@@ -42,13 +42,13 @@ int	is_min(t_int_list *a, int x)
 	}
 	if (buffer->c <= x)
 		return (0);
-	return (1);	
+	return (1);
 }
 
-int is_max(t_int_list *a, int x)
+int	is_max(t_int_list *a, int x)
 {
-	t_int_list *end;
-	t_int_list *buffer;
+	t_int_list	*end;
+	t_int_list	*buffer;
 
 	end = a->previous;
 	buffer = a;
@@ -60,7 +60,7 @@ int is_max(t_int_list *a, int x)
 	}
 	if (buffer->c >= x)
 		return (0);
-	return (1);	
+	return (1);
 }
 
 void	print_list(t_int_list *a)

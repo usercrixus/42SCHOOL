@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:12:48 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 05:11:33 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/25 23:59:02 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 int	is_well_placed(t_int_list *a, int x)
 {
-	int new_minimum = is_min(a, x);
-	int new_maximum = is_max(a, x);
+	int	new_minimum;
+	int	new_maximum;
+	int	exeption;
+	int	is_classic_situation;
 
-	int is_classic_situation = x > a->c && x < a->previous->c && !(is_min(a, a->previous->c) && is_max(a, a->c)) && list_len(&a, &a->previous) > 2;
-	int exeption4 = list_len(&a, &a->previous) == 2 && x > a->c && x < a->previous->c;
-	int exeption1 = new_minimum && is_max(a, a->c);
-	int exeption2 = new_maximum && is_max(a, a->c);
-	int exeption3 = new_maximum && is_min(a, a->c) && is_max(a, a->previous->c);
-	int exeption5 = list_len(&a, &a->previous) == 1;
-	return is_classic_situation || exeption1 || exeption2 || exeption3 || exeption4 || exeption5;	
+	new_minimum = is_min(a, x);
+	new_maximum = is_max(a, x);
+	is_classic_situation = x > a->c && x < a->previous->c && !(is_min(a, a->previous->c) && is_max(a, a->c)) && list_len(&a, &a->previous) > 2;
+	exeption = list_len(&a, &a->previous) == 2 && x > a->c && x < a->previous->c;
+	exeption = exeption || (new_minimum && is_max(a, a->c));
+	exeption = exeption || (new_maximum && is_max(a, a->c));
+	exeption = exeption || (new_maximum && is_min(a, a->c) && is_max(a, a->previous->c));
+	exeption = exeption || (list_len(&a, &a->previous) == 1);
+	return (is_classic_situation || exeption);
 }
 
-int calculate_step(int a, int b)
+int	calculate_step(int a, int b)
 {
 	if (a < 0 && b < 0)
 		return (ft_abs(ft_min(a, b)));
@@ -66,13 +70,12 @@ int	get_best_way(t_int_list **a, int x)
 
 struct s_way	get_best_branch(t_int_list **b, t_int_list **a)
 {
-	int			i;
-	int			len;
-	t_int_list	*buffer_right;
-	t_int_list	*buffer_left;
-	int			best_way_buffer;
+	int				i;
+	int				len;
+	t_int_list		*buffer_right;
+	t_int_list		*buffer_left;
+	int				best_way_buffer;
 	struct s_way	best_way;
-	
 
 	buffer_right = (*b);
 	buffer_left = (*b);
