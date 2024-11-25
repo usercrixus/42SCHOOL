@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:48 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/21 04:56:24 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:46:08 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_int_list	*create_node(int c)
 	node->next = node;
 	node->previous = node;
 	node->c = c;
+	node->lsi = 1;
+	node->lsi_previous = 0;
 	return (node);
 }
 
@@ -59,57 +61,4 @@ void	push(t_int_list **stack_pushed, t_int_list **node)
 		(*stack_pushed)->previous = *node;
 		*stack_pushed = *node;
 	}
-}
-
-void	swap(t_int_list **stack_pushed, t_int_list **stack_poped, int verbose)
-{
-	t_int_list	*poped;
-
-	poped = pop(stack_poped);
-	push(stack_pushed, &poped);
-	if (verbose)
-		ft_putendl_fd("pa", 1);
-}
-
-void	swap_top(t_int_list **stack)
-{
-	t_int_list	*poped;
-	t_int_list	*insert;
-
-	poped = pop(stack);
-	insert = (*stack)->next;
-	push(&insert, &poped);
-	ft_putendl_fd("sw", 1);
-}
-
-void	rotate(t_int_list **stack)
-{
-	if (*stack)
-		*stack = (*stack)->next;
-	ft_putendl_fd("r", 1);
-}
-
-void	rrotate(t_int_list **stack)
-{
-	if (*stack)
-		*stack = (*stack)->previous;
-	ft_putendl_fd("rr", 1);
-}
-
-void	rr(t_int_list **stacka, t_int_list **stackb)
-{
-	if (*stacka)
-		*stacka = (*stacka)->next;
-	if (*stackb)
-		*stackb = (*stackb)->next;
-	ft_putendl_fd("rrr", 1);
-}
-
-void	rrr(t_int_list **stacka, t_int_list **stackb)
-{
-	if (*stacka)
-		*stacka = (*stacka)->previous;
-	if (*stackb)
-		*stackb = (*stackb)->previous;
-	ft_putendl_fd("rrrr", 1);
 }
