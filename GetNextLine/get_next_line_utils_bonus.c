@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:41 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/24 21:35:29 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:27:06 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static int	push_str_node(t_str *str)
 {
@@ -49,7 +49,6 @@ int	push_str(t_str *str, char *c, ssize_t len)
 	return (1);
 }
 
-/*
 void	free_str(t_str *str)
 {
 	t_char_list	*buffer;
@@ -62,7 +61,6 @@ void	free_str(t_str *str)
 	}
 	free(str);
 }
-*/
 
 unsigned long long	is_line_feed(t_str *str)
 {

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:26 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/24 21:37:59 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 03:07:59 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ static int	populate_line(t_str *s, int fd)
 		if (!push_str(s, buffer, byte_readed))
 		{
 			free(buffer);
-			return (0);
+			return (-2);
 		}
 		if (is_buffer_line_feed(buffer, byte_readed))
 		{
 			free(buffer);
-			return (1);
+			return (-3);
 		}
 		byte_readed = read(fd, buffer, BUFFER_SIZE);
 	}
 	free(buffer);
-	return (-1);
+	return (byte_readed);
 }
 
 static unsigned long long	get_line_size(t_str *str, int fd)
@@ -97,9 +97,9 @@ static unsigned long long	get_line_size(t_str *str, int fd)
 	if (!line_size)
 	{
 		read_status = populate_line(str, fd);
-		if (!read_status)
+		if (read_status == -2 || read_status == -1)
 			return (0);
-		if (read_status == 1)
+		if (read_status == -3)
 			line_size = is_line_feed(str);
 		else
 			line_size = str->size;
@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 	unsigned long long	line_size;
 	char				*line;
 
-	if (fd < 0 || fd > 1024)
+	if (fd < 0 || fd >= 1024)
 		return (0);
 	if (!str[fd])
 		str[fd] = create_str();
@@ -121,7 +121,11 @@ char	*get_next_line(int fd)
 		return (0);
 	line_size = get_line_size(str[fd], fd);
 	if (!line_size)
+	{
+		free_str(str[fd]);
+		str[fd] = 0;
 		return (0);
+	}
 	line = get_char_array(str[fd], line_size);
 	if (!line)
 		return (0);

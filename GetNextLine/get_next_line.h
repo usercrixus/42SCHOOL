@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:45 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/24 21:38:00 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:21:46 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_str
 char				*get_next_line(int fd);
 int					push_str(t_str *str, char *c, ssize_t len);
 int					get_str_len(t_str *str);
-//void				free_str(t_str *str);
+void				free_str(t_str *str);
 char				*get_char_array(t_str *str, unsigned long long line_size);
 t_str				*create_str(void);
 unsigned long long	is_line_feed(t_str *str);

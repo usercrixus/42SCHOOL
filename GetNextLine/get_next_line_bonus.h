@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 18:58:45 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/24 21:30:31 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 02:19:00 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -40,7 +40,7 @@ typedef struct s_str
 char				*get_next_line(int fd);
 int					push_str(t_str *str, char *c, ssize_t len);
 int					get_str_len(t_str *str);
-//void				free_str(t_str *str);
+void				free_str(t_str *str);
 char				*get_char_array(t_str *str, unsigned long long line_size);
 t_str				*create_str(void);
 unsigned long long	is_line_feed(t_str *str);
