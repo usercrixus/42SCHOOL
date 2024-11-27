@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:51 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 05:13:36 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 05:10:35 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int argc, char **argv)
 	int				max;
 	int				*list;
 	int				i;
+	t_int_list		*end;
 
 	a = 0;
 	b = 0;
@@ -88,8 +89,11 @@ int	main(int argc, char **argv)
 	}
 	sort_int(list, argc - 1);
 	normalize(&a, list, argc - 1);
-	set_lsi(a);
-	sort(&b, &a, argc - 2);
+	end = a->previous;
+	print_list(a);
+	quick_sort(&a, &end, &b, &a);
+	// set_lsi(a);
+	// sort(&b, &a, argc - 2);
 	print_list(a);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 05:11:11 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:16:55 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ struct s_way
 	int step;
 };
 
+//quick sort
+int				quick_sort(t_int_list **start, t_int_list **end, t_int_list **b, t_int_list **a);
+int				is_sorted_a(t_int_list **start, t_int_list **end);
 //lis
 void			set_lsi(t_int_list *start);
 // linked list

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:00:59 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/22 04:18:05 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/26 00:08:15 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,9 @@ int	ft_ceil(double x)
 	if ((double)result < x)
 		return (result + 1);
 	return (result);
+}
+
+int	diff(int a, int b)
+{
+	return (a - b);
 }
