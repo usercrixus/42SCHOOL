@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:23:46 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/27 04:33:11 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/28 03:12:35 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 int	is_sorted_a(t_int_list **start, t_int_list **end)
 {
 	t_int_list	*buffer;
+	t_int_list	*buffer_end;
 
 	buffer = *start;
-	if (buffer && buffer->next == *end)
-		return (1);
-	while (buffer->next != *end && buffer->c >= buffer->next->c)
+	while (!is_max(buffer, buffer->c))
+	{
 		buffer = buffer->next;
-	if (buffer->next == *end)
+	}
+	buffer_end = buffer->previous;	
+	if (buffer && buffer->next == buffer_end)
+		return (1);
+	while (buffer->next != buffer_end && buffer->c >= buffer->next->c)
+	{
+		buffer = buffer->next;
+	}
+	if (buffer->next == buffer_end)
 		return (1);
 	return (0);
 }
@@ -54,7 +62,7 @@ int	is_min(t_int_list *a, int x)
 			return (0);
 		buffer = buffer->next;
 	}
-	if (buffer->c <= x)
+	if (buffer->c < x)
 		return (0);
 	return (1);
 }
@@ -72,7 +80,7 @@ int	is_max(t_int_list *a, int x)
 			return (0);
 		buffer = buffer->next;
 	}
-	if (buffer->c >= x)
+	if (buffer->c > x)
 		return (0);
 	return (1);
 }

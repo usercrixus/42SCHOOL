@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:19:06 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 23:53:18 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/28 04:52:16 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,23 @@ t_int_list	*next_lsi_node(t_int_list *current, t_int_list *end)
 	else if (next_lsi_node && buffer->lsi < next_lsi_node->lsi && buffer->lsi > current->lsi)
 		next_lsi_node = buffer;
 	return (next_lsi_node);
+}
+
+void	reset_lis(t_int_list *a)
+{
+	t_int_list	*buffer;
+	int			len;
+	t_int_list	*end;
+
+	end = a->previous;
+	len = list_len(&a, &end);
+	buffer = a;
+	while (len--)
+	{
+		buffer->lsi = 1;
+		buffer = buffer->next;
+	}
+	
 }
 
 void	set_lsi(t_int_list *a)

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/26 00:16:55 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/28 05:08:37 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,22 @@ struct s_way
 	int way;
 	int step;
 };
-
 //quick sort
 int				quick_sort(t_int_list **start, t_int_list **end, t_int_list **b, t_int_list **a);
 int				is_sorted_a(t_int_list **start, t_int_list **end);
 //lis
 void			set_lsi(t_int_list *start);
+void			reset_lis(t_int_list *a);
 // linked list
 t_int_list		*create_node(int c);
 t_int_list		*pop(t_int_list **stack);
 void			push(t_int_list **stack, t_int_list **node);
 // brute force
+int				is_well_placed(t_int_list *a, int x);
 struct s_way	get_best_branch(t_int_list **b, t_int_list **a);
 int				get_best_way(t_int_list **a, int x);
 int				manage_rotate(t_int_list **a, t_int_list **b, struct s_way best_way);
+int				calculate_step(int a, int b);
 // helper
 int				list_len(t_int_list **start, t_int_list **end);
 int				is_min(t_int_list *a, int x);
