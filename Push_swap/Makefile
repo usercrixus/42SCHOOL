@@ -1,11 +1,14 @@
 OBJS = \
-	main.o \
+	push_swap_main.o \
 	push_swap_action.o \
 	push_swap_brute_force.o \
 	push_swap_helper.o \
 	push_swap_lis.o \
-	push_swap_normalize.o \
 	push_swap_utils.o \
+	push_swap_calculate_rotation.o \
+	push_swap_manage_rotation.o \
+	push_swap_verify_input.o \
+	push_swap_normalize.o \
 
 all: libft.a libftmath.a push_swap
 
@@ -13,7 +16,7 @@ push_swap: $(OBJS)
 	cc $^ -L../libft/base -lft -L../libft/math -lftmath -o $@
 
 debug: $(OBJS)
-	cc $^ -L../libft/base -lft -L../libft/math -lftmath -o $@ -g3
+	cc -Wall -Wextra -Werror $^ -L../libft/base -lft -L../libft/math -lftmath -o $@
 
 %.o: %.c \
 	cc -c $< -Wall -Wextra -Werror -o $@

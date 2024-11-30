@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push_swap_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:51 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/30 05:14:36 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:09:54 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
-void	populate_a(t_int_list **a, char **argv, int argc)
+int	populate_a(t_int_list **a, char **argv, int argc)
 {
 	int			i;
 	int			number;
 	t_int_list	*node;
 
 	i = 0;
-	number = atoi(argv[i]);
-	node = create_node(number);
-	insert(a, &node);
-	i++;
 	while (i < argc)
 	{
 		number = atoi(argv[i]);
 		node = create_node(number);
+		if (!node)
+			return (0);
 		insert(a, &node);
 		i++;
+	}
+	return (1);
+}
+
+void	close_project(t_int_list *a)
+{
+	while (a)
+	{
+		free(pop(&a));
 	}
 }
 
@@ -40,21 +46,18 @@ int	main(int argc, char **argv)
 	int				*list;
 	int				i;
 
-	a = 0;
-	b = 0;
 	if (argc < 2)
 		return (1);
-	populate_a(&a, &argv[1], argc - 1);
-	list = (int *)malloc(sizeof(int) * (argc - 1));
-	i = 0;
-	while (i < argc - 1)
-	{
-		list[i] = atoi(argv[i + 1]);
-		i++;
-	}
-	sort_int(list, argc - 1);
-	normalize(&a, list, argc - 1);
-	set_lsi(a);
+	if (!is_verified_input(argv + 1, argc - 1))
+		return (ft_putendl_fd("Error", 2), 1);
+	a = 0;
+	b = 0;
+	if (!populate_a(&a, &argv[1], argc - 1))
+		return (ft_putendl_fd("Error", 2), 1);
+	if (!normalize(&a, argv, argc - 1))
+		return (ft_putendl_fd("Error", 2), 1);
+	set_lis(a);
 	sort_brute_force(&b, &a, argc - 2);
+	close_project(a);
 	return (0);
 }

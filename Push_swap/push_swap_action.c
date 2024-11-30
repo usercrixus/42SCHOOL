@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:16:52 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/29 22:25:09 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/30 05:30:14 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,16 @@ void	rrr(t_int_list **stacka, t_int_list **stackb)
 	ft_putendl_fd("rrr", 1);
 }
 
-void	push(t_int_list **stack_pushed, t_int_list **stack_poped, char c, int verbose)
+void	push(t_int_list **pushed, t_int_list **poped, char c, int verbose)
 {
-	t_int_list	*poped;
+	t_int_list	*node_poped;
 
-	poped = pop(stack_poped);
-	native_push(stack_pushed, &poped);
+	node_poped = pop(poped);
+	native_push(pushed, &node_poped);
 	if (verbose)
 	{
 		ft_putchar_fd('p', 1);
 		ft_putchar_fd(c, 1);
 		ft_putchar_fd('\n', 1);
 	}
-}
-
-void	swap(t_int_list **stack, char c)
-{
-	t_int_list	*poped;
-	t_int_list	*inserted;
-
-	poped = pop(stack);
-	inserted = (*stack)->next;
-	native_push(&inserted, &poped);
-	ft_putchar_fd('s', 1);
-	ft_putchar_fd(c, 1);
-	ft_putchar_fd('\n', 1);
 }

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:48 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/29 20:08:41 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:10:22 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ t_int_list	*create_node(int c)
 	t_int_list	*node;
 
 	node = (t_int_list *)malloc(sizeof(t_int_list) * 1);
+	if (!node)
+		return (0);
 	node->next = node;
 	node->previous = node;
 	node->c = c;
-	node->lsi = 1;
-	node->lsi_previous = 0;
+	node->lis = 1;
+	node->lis_previous = 0;
 	return (node);
 }
 
