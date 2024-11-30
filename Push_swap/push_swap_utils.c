@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:48 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/25 23:48:26 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:08:41 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,50 @@ t_int_list	*pop(t_int_list **stack)
 
 	if (!*stack)
 		return (0);
-	poped = (*stack);
-	if ((*stack)->next == *stack)
+	poped = (*stack)->previous;
+	if (poped == *stack)
 	{
 		*stack = 0;
 		return (poped);
 	}
-	(*stack)->previous->next = (*stack)->next;
-	(*stack)->next->previous = (*stack)->previous;
-	(*stack) = (*stack)->next;
+	(*stack)->previous->previous->next = *stack;
+	(*stack)->previous = (*stack)->previous->previous;
 	poped->next = poped;
 	poped->previous = poped;
 	return (poped);
 }
 
-void	push(t_int_list **stack_pushed, t_int_list **node)
+void	native_push(t_int_list **stack, t_int_list **node)
 {
-	if (!*stack_pushed)
+	if (!*stack)
 	{
-		*stack_pushed = *node;
-		(*stack_pushed)->next = *stack_pushed;
-		(*stack_pushed)->previous = *stack_pushed;
+		*stack = *node;
+		(*stack)->next = *stack;
+		(*stack)->previous = *stack;
 	}
 	else
 	{
-		(*node)->next = *stack_pushed;
-		(*node)->previous = (*stack_pushed)->previous;
-		(*stack_pushed)->previous->next = *node;
-		(*stack_pushed)->previous = *node;
-		*stack_pushed = *node;
+		(*node)->next = *stack;
+		(*node)->previous = (*stack)->previous;
+		(*stack)->previous->next = *node;
+		(*stack)->previous = *node;
+	}
+}
+
+void	insert(t_int_list **stack, t_int_list **node)
+{
+	if (!*stack)
+	{
+		*stack = *node;
+		(*stack)->next = *stack;
+		(*stack)->previous = *stack;
+	}
+	else
+	{
+		(*node)->next = *stack;
+		(*node)->previous = (*stack)->previous;
+		(*stack)->previous->next = *node;
+		(*stack)->previous = *node;
+		*stack = *node;
 	}
 }

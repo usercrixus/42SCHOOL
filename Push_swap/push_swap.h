@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:21:55 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/28 05:08:37 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/30 05:12:55 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,21 @@ struct s_minmax
 
 struct s_way
 {
-	int branch;
-	int way;
-	int step;
+	int	branch;
+	int	way;
+	int	step;
 };
-//quick sort
-int				quick_sort(t_int_list **start, t_int_list **end, t_int_list **b, t_int_list **a);
-int				is_sorted_a(t_int_list **start, t_int_list **end);
+
 //lis
 void			set_lsi(t_int_list *start);
 void			reset_lis(t_int_list *a);
 // linked list
 t_int_list		*create_node(int c);
 t_int_list		*pop(t_int_list **stack);
-void			push(t_int_list **stack, t_int_list **node);
+void			insert(t_int_list **stack, t_int_list **node);
+void			native_push(t_int_list **stack, t_int_list **node);
 // brute force
+int				sort_brute_force(t_int_list **b, t_int_list **a, int max);
 int				is_well_placed(t_int_list *a, int x);
 struct s_way	get_best_branch(t_int_list **b, t_int_list **a);
 int				get_best_way(t_int_list **a, int x);
@@ -70,10 +70,10 @@ void			print_list(t_int_list *a);
 void			normalize(t_int_list **a, int *tab, int size);
 void			sort_int(int *tab, int size);
 // action
-void			swap_top(t_int_list **stack);
-void			swap(t_int_list **stack_pushed, t_int_list **stack_poped, int verbose);
-void			rotate(t_int_list **stack);
-void			rrotate(t_int_list **stack);
+void			swap(t_int_list **stack, char c);
+void			push(t_int_list **stack_pushed, t_int_list **stack_poped, char c, int verbose);
+void			rotate(t_int_list **stack, char c);
+void			rrotate(t_int_list **stack, char c);
 void			rr(t_int_list **stacka, t_int_list **stackb);
 void			rrr(t_int_list **stacka, t_int_list **stackb);
 

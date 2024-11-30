@@ -1,5 +1,6 @@
 OBJS = \
 	base.o \
+	power.o \
 
 all: libftmath.a
 

@@ -6,7 +6,7 @@
 /*   By: achaisne <achaisne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 21:23:46 by achaisne          #+#    #+#             */
-/*   Updated: 2024/11/28 03:12:35 by achaisne         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:39:45 by achaisne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_sorted_a(t_int_list **start, t_int_list **end)
 	{
 		buffer = buffer->next;
 	}
-	buffer_end = buffer->previous;	
+	buffer_end = buffer->previous;
 	if (buffer && buffer->next == buffer_end)
 		return (1);
 	while (buffer->next != buffer_end && buffer->c >= buffer->next->c)
@@ -39,6 +39,8 @@ int	list_len(t_int_list **start, t_int_list **end)
 	t_int_list	*buffer;
 	int			i;
 
+	if (!(*start))
+		return (0);
 	i = 1;
 	buffer = *start;
 	while (buffer != *end)
